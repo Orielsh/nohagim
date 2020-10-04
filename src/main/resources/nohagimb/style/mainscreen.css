@@ -1,0 +1,38 @@
+/*monthGridView*/
+
+.month_gridPane{
+    -fx-background-color: #ffffff;
+}
+
+.week_day_name_label{
+    -fx-text-fill: #4e4e4e;
+    -fx-font-size: 13pt;
+    -fx-font-weight: bold;
+}
+
+.valid_day_vBox{
+    -fx-background-color:  white;
+    -fx-border-width: .1;
+    -fx-border-color: #5b5b5b;
+}
+
+.month_current_day_number_label{
+    -fx-font-size: 13pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+.month_current_day_label_circled_background{
+    -fx-fill: rgba(2, 39, 229, 0.68);
+}
+
+.month_days_number_labels {
+    -fx-font-size: 13pt;
+    -fx-text-fill: #626262;
+}
+
+.grayedOut_day_vBox {
+    -fx-background-color: #dedede;
+    -fx-border-width: .1;
+    -fx-border-color: #5b5b5b;
+}
