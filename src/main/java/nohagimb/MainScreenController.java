@@ -1,35 +1,56 @@
 package nohagimb;
 
+import javafx.animation.*;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.YearMonth;
 import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Priority.ALWAYS;
-import static javafx.scene.layout.Priority.max;
 
 public class MainScreenController implements Initializable {
-
-    /*represent month table display*/
+    /*Fxml doc components*/
+    @FXML
+    BorderPane borderPane;
+    /*monthGridView - represent month table display*/
     @FXML
     private GridPane monthGridView;
+    @FXML
+    Button datePickTrayButton;
+    @FXML
+    AnchorPane datePickTrayPanel;
+    @FXML
+    VBox monthList;
+    @FXML
+    Label selectYearLabel;
+
+
+    /*Help data-members*/
+    private boolean isSlideOpen = false;
+    private SimpleIntegerProperty year;
+    private LocalDate dateToDisplay;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dateToDisplay = LocalDate.now();
+        year = new SimpleIntegerProperty();
+        year.set(LocalDate.now().getYear());
+        selectYearLabel.textProperty().bind(year.asString());
         setWeekDayNames();
-        fillDateNumbers(LocalDate.now());
+        fillDateNumbers(dateToDisplay);
     }
 
     /*Set weekday names labels on monthGridView.
@@ -54,18 +75,21 @@ public class MainScreenController implements Initializable {
         int year = date.getYear();
         int month = date.getMonth().getValue();
         int monthLength = YearMonth.of(year,month).lengthOfMonth();
-
-        /*'+1' set first day of the week to be sunday instead of monday*/
-        int firstDayOfMonth = (date.withDayOfMonth(1).getDayOfWeek().getValue()+1)%7;
+        /*Days are 1-base and not 0-base. Also, default first day is monday.
+        * '%7' make mapping: sunday=0, monday=1,..*/
+        int firstDayOfMonth = ((date.withDayOfMonth(1).getDayOfWeek().getValue())%7);
 
         int row = 0;
         int col = 0;
 
+
+        /*remove prev display*/
+        monthGridView.getChildren().removeIf(node -> GridPane.getRowIndex(node)>0);
         /*Graying out early-out-of-range days*/
         LocalDate prevMonth = date.minusMonths(1);
         int prevMonthLength = YearMonth.of(prevMonth.getYear(),prevMonth.getMonth()).lengthOfMonth();
-        for (int i = firstDayOfMonth; i > 1 ; i--) {
-            monthGridView.add(createGrayedOutDayVBox((prevMonthLength--) +""), i-2, 1);
+        for (int i = firstDayOfMonth; i > -1 ; i--) {
+            monthGridView.add(createGrayedOutDayVBox((prevMonthLength--) +""), i, 1);
         }
 
         int currentDay = LocalDate.now().getDayOfMonth();
@@ -98,18 +122,109 @@ public class MainScreenController implements Initializable {
                 vBox.getChildren().add(title);
             }
 
-            col = (i + firstDayOfMonth - 2) % 7;         // '-2' translate firstDayOfWeek and monthLength to 0-base.
-            row = ((i + firstDayOfMonth - 2) / 7) + 1;   // '+1' first row belong to weekDayLabels
-
+            col = (i + firstDayOfMonth - 1) % 7;         // '-2' translate firstDayOfWeek and monthLength to 0-base.
+            row = ((i + firstDayOfMonth - 1) / 7) + 1;   // '+1' first row belong to weekDayLabels
             monthGridView.add(vBox, col, row);
         }
 
         /*Graying out late-out-of-range days*/
-        for (int i = 1; i < 7-(col+2) ; i++) {
+        for (int i = 1; i < 8-(col+1) ; i++) {
             monthGridView.add(createGrayedOutDayVBox(i+""), col+i, row);
         }
     }
 
+    /*Fxml Doc Methods:*/
+    @FXML
+    private void slide(){
+        if(isSlideOpen)
+            slideOut();
+        else
+            slideIn();
+    }
+    @FXML
+    private void increaseYear(){
+        dateToDisplay = dateToDisplay.plusYears(1);
+        year.set(dateToDisplay.getYear());
+        fillDateNumbers(dateToDisplay);
+    }
+    @FXML
+    private void decreaseYear(){
+        dateToDisplay = dateToDisplay.minusYears(1);
+        year.set(dateToDisplay.getYear());
+        fillDateNumbers(dateToDisplay);
+    }
+
+    @FXML
+    private void setMonth(Event e){
+        String labelText = ((Label)e.getSource()).getText();
+        int monthNumber = 0;
+        switch (labelText) {
+            case "ינואר":
+                monthNumber = 1;
+                break;
+            case "פברואר":
+                monthNumber = 2;
+                break;
+            case "מרץ":
+                monthNumber = 3;
+                break;
+            case "אפריל":
+                monthNumber = 4;
+                break;
+            case "מאי":
+                monthNumber = 5;
+                break;
+            case "יוני":
+                monthNumber = 6;
+                break;
+            case "יולי":
+                monthNumber = 7;
+                break;
+            case "אוגוסט":
+                monthNumber = 8;
+                break;
+            case "ספטמבר":
+                monthNumber = 9;
+                break;
+            case "אוקטובר":
+                monthNumber = 10;
+                break;
+            case "נובמבר":
+                monthNumber = 11;
+                break;
+            case "דצמבר":
+                monthNumber = 12;
+                break;
+        }
+
+        dateToDisplay = LocalDate.of(year.getValue(),monthNumber,1);
+        fillDateNumbers(dateToDisplay);
+    }
+
+    /*Help methods*/
+    private void slideIn(){
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(datePickTrayPanel.prefWidthProperty(), 150, Interpolator.LINEAR);
+        KeyFrame kf = new KeyFrame(Duration.seconds(0.2), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+        timeline.setOnFinished(t -> {
+            isSlideOpen = true;
+            datePickTrayButton.setRotate(180);
+        });
+    }
+
+    private void slideOut() {
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(datePickTrayPanel.prefWidthProperty(), 0, Interpolator.LINEAR);
+        KeyFrame kf = new KeyFrame(Duration.seconds(0.2), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+        timeline.setOnFinished(t -> {
+            isSlideOpen = false;
+            datePickTrayButton.setRotate(0);
+        });
+    }
 
     private VBox createGrayedOutDayVBox(String text) {
         Label title = new Label(text);

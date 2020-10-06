@@ -1,38 +1,79 @@
-/*monthGridView*/
-
+/*--------------------monthGridView----------------------*/
 .month_gridPane{
     -fx-background-color: #ffffff;
 }
-
 .week_day_name_label{
     -fx-text-fill: #4e4e4e;
     -fx-font-size: 13pt;
     -fx-font-weight: bold;
 }
-
 .valid_day_vBox{
     -fx-background-color:  white;
     -fx-border-width: .1;
     -fx-border-color: #5b5b5b;
 }
-
+.valid_day_vBox:hover{
+    -fx-background-color: rgba(0, 63, 255, 0.45);
+}
 .month_current_day_number_label{
     -fx-font-size: 13pt;
     -fx-font-weight: bold;
     -fx-text-fill: #FFFFFF;
 }
-
 .month_current_day_label_circled_background{
     -fx-fill: rgba(2, 39, 229, 0.68);
 }
-
 .month_days_number_labels {
     -fx-font-size: 13pt;
     -fx-text-fill: #626262;
 }
-
 .grayedOut_day_vBox {
     -fx-background-color: #dedede;
     -fx-border-width: .1;
     -fx-border-color: #5b5b5b;
+}
+/*--------------------datePickTrayPanel----------------------*/
+.selected_year{
+    -fx-text-fill: #4e4e4e;
+    -fx-font-size: 13pt;
+    -fx-font-weight: bold;
+}
+.next_year_button{
+    -fx-background-image: url(../icons/Arrow.jpg);
+    -fx-rotate: 180deg;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 20px;
+    -fx-background-position: center;
+    -fx-min-width: 0px;
+    -fx-min-height: 0px;
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+}
+.prev_year_button{
+    -fx-background-image: url(../icons/Arrow.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 20px;
+    -fx-background-position: center;
+    -fx-min-width: 0px;
+    -fx-min-height: 0px;
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+}
+/*--------------------BorderPane.TOP(Header)----------------------*/
+.day_pick_tray_button_closed_status{
+    -fx-background-image: url(../icons/DoubleArrow.jpg);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 20px;
+    -fx-background-position: center;
+}
+.day_pick_tray_button_opened_status{
+    -fx-background-image: url(../icons/DoubleArrow.jpg);
+    -fx-rotate: 180deg;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 20px;
+    -fx-background-position: 60;
+}
+
+.months_names_labels:hover{
+    -fx-background-color: #cccccc;
 }
