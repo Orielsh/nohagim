@@ -1,4 +1,4 @@
-package nohagimb;
+package nohagim;
 
 import javafx.animation.*;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 import static javafx.scene.layout.Priority.ALWAYS;
 
 public class MainScreenController implements Initializable {
-    /*Fxml doc components*/
+    /*Fxml components*/
     @FXML
     BorderPane borderPane;
     /*monthGridView - represent month table display*/
@@ -75,8 +75,8 @@ public class MainScreenController implements Initializable {
         int year = date.getYear();
         int month = date.getMonth().getValue();
         int monthLength = YearMonth.of(year,month).lengthOfMonth();
-        /*Days are 1-base and not 0-base. Also, default first day is monday.
-        * '%7' make mapping: sunday=0, monday=1,..*/
+        /*Days in Java are 1-base and not 0-base. Also, default first day is monday.
+        * '%7' mapping: sunday=0, monday=1,..*/
         int firstDayOfMonth = ((date.withDayOfMonth(1).getDayOfWeek().getValue())%7);
 
         int row = 0;
