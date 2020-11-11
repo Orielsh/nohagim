@@ -1,18 +1,23 @@
-package nohagim;
+package nohagim.controllers;
 
 import javafx.animation.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import nohagim.App;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
@@ -21,7 +26,7 @@ import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Priority.ALWAYS;
 
-public class MainScreenController implements Initializable {
+public class MainScreen implements Initializable {
     /*Fxml components*/
     @FXML
     BorderPane borderPane;
@@ -30,6 +35,8 @@ public class MainScreenController implements Initializable {
     private GridPane monthGridView;
     @FXML
     Button datePickTrayButton;
+    @FXML
+    Button menuButton;
     @FXML
     AnchorPane datePickTrayPanel;
     @FXML
@@ -67,11 +74,11 @@ public class MainScreenController implements Initializable {
             GridPane.setHgrow(weekDayLabel, ALWAYS);
             GridPane.setHalignment(weekDayLabel, HPos.CENTER);
             monthGridView.add(weekDayLabel, i-1, 0);
+
         }
     }
 
     private void fillDateNumbers(LocalDate date) {
-
         int year = date.getYear();
         int month = date.getMonth().getValue();
         int monthLength = YearMonth.of(year,month).lengthOfMonth();
@@ -88,7 +95,7 @@ public class MainScreenController implements Initializable {
         /*Graying out early-out-of-range days*/
         LocalDate prevMonth = date.minusMonths(1);
         int prevMonthLength = YearMonth.of(prevMonth.getYear(),prevMonth.getMonth()).lengthOfMonth();
-        for (int i = firstDayOfMonth; i > -1 ; i--) {
+        for (int i = firstDayOfMonth-1; i > -1 ; i--) {
             monthGridView.add(createGrayedOutDayVBox((prevMonthLength--) +""), i, 1);
         }
 
@@ -99,7 +106,6 @@ public class MainScreenController implements Initializable {
         /*//Setup current month days*/
         for (int i = 1; i <= monthLength ;i++){
             Label title = new Label(i+"");
-
             VBox vBox = new VBox();
             vBox.getStyleClass().add("valid_day_vBox");
             vBox.setAlignment(Pos.TOP_CENTER);
@@ -236,5 +242,21 @@ public class MainScreenController implements Initializable {
         GridPane.setVgrow(vBox,ALWAYS);
         vBox.getChildren().add(title);
         return vBox;
+    }
+
+    @FXML
+    private void displayMenu() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/menu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),250,300);
+        Stage stage = new Stage();
+        stage.setTitle("תפריט");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        //TODO make stage.setX() to left of the main stage or use sliding menu.
+        stage.setX(150);
+        stage.setY(150);    //todo fix this later - using sliding menu. Now only for setup.
+        //END to-do
+        menuButton.disableProperty().bind(stage.showingProperty());
+        stage.show();
     }
 }

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 enum LicenceClass{A,A1,A2,B,C,C1,D,D1,D2,D3}
 
 @Entity
-@Table (name = "DRIVERS")
+@Table (name = "\"Drivers\"")
 public class Driver {
     /*Properties data-members*/
     private int id;

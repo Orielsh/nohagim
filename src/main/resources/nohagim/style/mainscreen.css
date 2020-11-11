@@ -15,6 +15,7 @@
 .valid_day_vBox:hover{
     -fx-background-color: rgba(0, 63, 255, 0.45);
 }
+
 .month_current_day_number_label{
     -fx-font-size: 13pt;
     -fx-font-weight: bold;

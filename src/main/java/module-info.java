@@ -10,9 +10,16 @@ module nohagim {
     requires java.instrument;
     requires com.sun.xml.bind;
     requires com.fasterxml.classmate;
+    requires org.apache.commons.io;
+    requires java.sql.rowset;
+    requires org.apache.pdfbox;
+    requires java.desktop;
+    requires javafx.swing;
 
     opens nohagim to javafx.fxml;
+    opens nohagim.controllers to javafx.fxml;
     exports nohagim.Entities;
+    exports nohagim.controllers;
     exports nohagim;
 
 }
