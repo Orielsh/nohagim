@@ -11,7 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nohagim.controllers.CustomersList">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="487.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="nohagim.controllers.CustomersList">
    <children>
       <VBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="480.0" prefWidth="640.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -27,7 +29,7 @@
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="37.0" prefWidth="349.0" />
+                   <TextField fx:id="searchField" prefHeight="37.0" prefWidth="349.0"/>
                   <Button mnemonicParsing="false" onAction="#addCustomer" text="הוספת חברה">
                      <HBox.margin>
                         <Insets left="350.0" />
@@ -38,19 +40,19 @@
                   <Insets left="15.0" />
                </padding>
             </HBox>
-            <TableView prefHeight="447.0" prefWidth="640.0">
+             <TableView fx:id="list" prefHeight="447.0" prefWidth="640.0">
               <columns>
-                <TableColumn prefWidth="131.0" text="שם" />
-                <TableColumn prefWidth="133.0" text="מזהה" />
-                  <TableColumn prefWidth="140.0" text="טלפון" />
-                  <TableColumn prefWidth="118.0" text="פקס" />
-                  <TableColumn prefWidth="152.0" text="מנהל מקצועי" />
-                  <TableColumn prefWidth="225.0" text="E-Mail" />
+                  <TableColumn fx:id="name" prefWidth="131.0" text="שם"/>
+                  <TableColumn fx:id="id" prefWidth="133.0" style="-fx-alignment: CENTER-RIGHT;" text="מזהה"/>
+                  <TableColumn fx:id="phone" prefWidth="140.0" style="-fx-alignment: CENTER-RIGHT;" text="טלפון"/>
+                  <TableColumn fx:id="fax" prefWidth="118.0" style="-fx-alignment: CENTER-RIGHT;" text="פקס"/>
+                  <TableColumn fx:id="professionalManagerName" prefWidth="152.0" text="מנהל מקצועי"/>
+                  <TableColumn fx:id="email" prefWidth="225.0" style="-fx-alignment: CENTER-RIGHT;" text="E-Mail"/>
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="הצג" />
+                   <Button fx:id="viewCustomer" mnemonicParsing="false" onAction="#viewCustomer" text="הצג"/>
                </children>
                <padding>
                   <Insets bottom="10.0" top="5.0" />

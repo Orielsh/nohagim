@@ -6,9 +6,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class BlobUtil {
-
-    public static byte[] getBytes(String path){
-        File file = new File(path);
+    //todo: check if need to close file or only streams.
+    public static byte[] getBytes(File file) {
         byte[] bytes = null;
         try {
             bytes = FileUtils.readFileToByteArray(file);

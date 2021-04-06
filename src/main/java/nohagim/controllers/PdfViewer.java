@@ -23,9 +23,9 @@ public class PdfViewer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            BufferedImage bi = PDFUtil.PDFtoJPG(BlobUtil.getBytes("src/main/resources/nohagim/testfiles/sample.pdf")).get(0);
-            Image image = SwingFXUtils.toFXImage(bi, null);
-            imageView.setImage(image);
+            //BufferedImage bi = PDFUtil.PDFtoJPG(BlobUtil.getBytes("src/main/resources/nohagim/testfiles/sample.pdf")).get(0);
+            //Image image = SwingFXUtils.toFXImage(bi, null);
+            //imageView.setImage(image);
 
         } catch (Exception e) {
             e.printStackTrace();

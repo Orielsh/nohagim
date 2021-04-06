@@ -5,7 +5,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="hibernate.cfg.xml" />
-          <unit-entry name="nohagim:hibernate:hibernate.cfg.xml" />
+          <unit-entry name="nohagim:hibernate:hibernate.cfg.xml" value="d7ac3a04-2679-4006-a57b-3e6164290560" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/nohagim/hibernate/hibernate.cfg.xml" />

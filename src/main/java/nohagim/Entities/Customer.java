@@ -3,12 +3,12 @@ package nohagim.Entities;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.sql.Blob;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "\"Customers\"")
-public class Customer {
-
+public class Customer implements nohagim.Entities.Entity {
+    //todo - test: if all fields assigned.
     /*Data members*/
     private Integer id;
     private String name;
@@ -17,9 +17,9 @@ public class Customer {
     private Integer phoneNumber;
     private Integer faxNumber;
     private String email;
-    private Date joinDate;
+    private LocalDate joinDate;
     private String professionalManagerName; //todo: need also id (picture?) and valid certificate (doc?/image).
-    private Blob transportationLicence;
+    private Blob professionalManagerDoc;
     //TransportationLicence .. //todo need to complete - validity and, expiration date, document.
     //Contract - picture? / PDF?
 
@@ -37,7 +37,7 @@ public class Customer {
     public String getContactPerson() {return contactPerson;}
     public void setContactPerson(String contactPerson) {this.contactPerson = contactPerson;}
 
-    @Column(name = "\"Adress\"")
+    @Column(name = "\"Address\"")
     public String getAddress(){return address;}
     public void setAddress(String address){this.address = address;}
 
@@ -54,16 +54,31 @@ public class Customer {
     public void setEmail(String email) {this.email = email;}
 
     @Basic
-    @Temporal(TemporalType.DATE)
     @Column(name = "\"JoinDate\"", nullable = false)
-    public Date getJoinDate() {return joinDate;}
-    public void setJoinDate(Date joinDate) {this.joinDate = joinDate;}
+    public LocalDate getJoinDate() {
+        return joinDate;
+    }
 
+    public void setJoinDate(LocalDate joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    @Column(name = "\"ProfessionalManagerName\"")
     public String getProfessionalManagerName() {return professionalManagerName;}
     public void setProfessionalManagerName(String professionalManagerName) {this.professionalManagerName = professionalManagerName;}
 
     @Lob
-    @Column(name = "\"TransportationDoc\"")
-    public Blob getTransportationLicence() {return transportationLicence;}
-    public void setTransportationLicence(Blob transportationLicence) {this.transportationLicence = transportationLicence;}
+    @Column(name = "\"ProfessionalManagerDoc\"")
+    public Blob getProfessionalManagerDoc() {
+        return professionalManagerDoc;
+    }
+
+    public void setProfessionalManagerDoc(Blob professionalManagerDoc) {
+        this.professionalManagerDoc = professionalManagerDoc;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
